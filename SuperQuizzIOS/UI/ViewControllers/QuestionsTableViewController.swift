@@ -25,13 +25,28 @@ class QuestionsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         
-        let question1 = Question(title: "Quelle est la capitale de la france ?", answers: ["Paris","Marseille","Tours","Poitiers"], correctAnswer: "Paris")
-        let question2 = Question(title: "Quelle est la capitale de la Chine ?", answers: ["Pekin","Hong-Kong","Tokyo","Kyoto"], correctAnswer: "Pekin")
-        
-        questions.append(question1)
-        questions.append(question2)
-        
         tableView.register(UINib(nibName: "QuestionTableViewCell", bundle: nil), forCellReuseIdentifier: "QuestionTableViewCell")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        APIClient.instance.getAllQuestionsFromServer(onSuccess: { (questionsToReturn) in
+            self.questions = questionsToReturn
+            
+            //retour dans le thread principal pour charler la liste a l'ecran
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }) { (Error) in
+            print(Error)
+        }
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -48,8 +63,7 @@ class QuestionsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuestionTableViewCell", for: indexPath) as! QuestionTableViewCell
-
-        //recuperer les questions et afficher l'intitulé
+        
         
         cell.questionLabelTitle.text = questions[indexPath.row].title
 
@@ -60,7 +74,6 @@ class QuestionsTableViewController: UITableViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AnswerViewController") as! AnswerViewController
         vc.question = questions[indexPath.row]
         vc.setOnReponseAnswered { (questionAnswered, result) in
-            //TODO mettre a jour la liste
             self.navigationController?.popViewController(animated: true)
             self.tableView.reloadData()
         }
@@ -68,7 +81,6 @@ class QuestionsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
         let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (action, indexpath) in
             let controller = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CreateOrEditQuestionViewController") as! CreateOrEditQuestionViewController
             controller.delegate = self
@@ -78,14 +90,21 @@ class QuestionsTableViewController: UITableViewController {
         }
         
         let deleteAction = UITableViewRowAction(style: .destructive, title: "delete") { (action, indexpath) in
-            //TODO: delete question
+            APIClient.instance.deleteQuestionFromTheServer(question: self.questions[indexPath.row], onSuccess: { () in
+                print("passé ici")
+                DispatchQueue.main.async {
+                    self.questions.remove(at: indexPath.row)
+                    self.tableView.reloadData()
+                }
+            }, onError: { (Error) in
+                print(Error)
+            })
         }
+
         return [editAction,deleteAction]
     }
     
     
-    
-
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showCreateOrEditViewController" {
@@ -101,14 +120,25 @@ class QuestionsTableViewController: UITableViewController {
 
 extension QuestionsTableViewController : CreateOrEditQuestionDelegate {
     func userDidEditQuestion(q: Question) {
-        // TODO: Maj de la question
+        APIClient.instance.updateQuestionFromTheServer(question: q, onSuccess: { (q) in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }) { (Error) in
+            print(Error)
+        }
+        
         self.presentedViewController?.dismiss(animated: true, completion: nil)
     }
     
     func userDidCreateQuestion(q: Question) {
-        // TODO:  creer la  question
-        questions.append(q)
-        tableView.reloadData()
+        APIClient.instance.addQuestionToTheServer(question: q, onSuccess: { (q) in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }) { (Error) in
+            print(Error)
+        }
         self.presentedViewController?.dismiss(animated: true, completion: nil)
     }
     

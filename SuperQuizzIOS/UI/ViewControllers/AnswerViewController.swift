@@ -11,6 +11,7 @@ import UIKit
 class AnswerViewController: UIViewController {
 
     var question : Question!
+    var work : DispatchWorkItem!
     
     private var onQuestionAnswered : ((_ question : Question, _ isCorrectAnswer : Bool)->())?
     
@@ -21,6 +22,9 @@ class AnswerViewController: UIViewController {
     @IBOutlet weak var buttonFourthAnswer: UIButton!
     
     
+    @IBOutlet weak var progressTime: UIProgressView!
+    
+    
     func setOnReponseAnswered(closure : @escaping (_ question: Question,_ isCorrectAnswer :Bool)->()) {
         onQuestionAnswered = closure
     }
@@ -29,16 +33,32 @@ class AnswerViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        print(question.title)
         labelQuestionTitle.text = question.title
         buttonFirstAnswer.setTitle(question.answers[0], for: .normal)
         buttonSecondAnswer.setTitle(question.answers[1], for: .normal)
         buttonThirdAnswer.setTitle(question.answers[2], for: .normal)
-        buttonFourthAnswer.setTitle(question.answers[3], for: .normal) 
+        buttonFourthAnswer.setTitle(question.answers[3], for: .normal)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        work = DispatchWorkItem {
+            var count = 0
+            let duration = 60
+            while count < duration {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    Thread.sleep(forTimeInterval: 0.1)
+                    count = count + 1
+                    DispatchQueue.main.async {
+                        self.progressTime.setProgress(Float(count), animated: true)
+                    }
+                }
+            }
+        }
+        DispatchQueue.global().async(execute: work)
     }
     
     func userDidChooseAnswer(isCorrectAnswer : Bool){
-        //TODO : animation echec et success
         if isCorrectAnswer == true {
             print("Bonne réponse")
         }else {
@@ -56,8 +76,10 @@ class AnswerViewController: UIViewController {
         }else {
             isTrue = false
         }
+        work.cancel()
         userDidChooseAnswer(isCorrectAnswer: isTrue)
     }
+    
     
 }
 

@@ -123,9 +123,15 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ifp-0v-oC9">
+                                <rect key="frame" x="16" y="113" width="294" height="2"/>
+                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="IpP-K9-zjC" firstAttribute="top" secondItem="ifp-0v-oC9" secondAttribute="bottom" constant="15" id="0Tl-Xj-Jnf"/>
+                            <constraint firstAttribute="trailing" secondItem="ifp-0v-oC9" secondAttribute="trailing" constant="10" id="9La-bj-zaK"/>
+                            <constraint firstItem="ifp-0v-oC9" firstAttribute="leading" secondItem="Dsi-Bv-1yk" secondAttribute="leading" constant="16" id="F5B-uI-e7K"/>
                             <constraint firstItem="IpP-K9-zjC" firstAttribute="top" secondItem="mt9-gh-SYT" secondAttribute="bottom" constant="5" id="FiO-x5-ze2"/>
                             <constraint firstItem="5Ds-aj-ccQ" firstAttribute="bottom" secondItem="IpP-K9-zjC" secondAttribute="bottom" constant="5" id="Noz-5W-1Xz"/>
                             <constraint firstItem="5Ds-aj-ccQ" firstAttribute="trailing" secondItem="IpP-K9-zjC" secondAttribute="trailing" constant="10" id="R4K-Cj-JHY"/>
@@ -142,11 +148,12 @@
                         <outlet property="buttonSecondAnswer" destination="hFu-JE-Ydg" id="Bca-EE-kME"/>
                         <outlet property="buttonThirdAnswer" destination="aHP-pD-fhX" id="sPD-iv-CwB"/>
                         <outlet property="labelQuestionTitle" destination="mt9-gh-SYT" id="fpg-Ja-OGM"/>
+                        <outlet property="progressTime" destination="ifp-0v-oC9" id="Myp-db-z8b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kC6-XJ-cVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1257" y="735"/>
+            <point key="canvasLocation" x="1256.25" y="734.15492957746483"/>
         </scene>
         <!--Create Or Edit Question View Controller-->
         <scene sceneID="ENS-D3-8Ay">

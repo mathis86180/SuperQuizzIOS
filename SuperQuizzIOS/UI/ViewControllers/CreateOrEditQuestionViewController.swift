@@ -27,6 +27,9 @@ class CreateOrEditQuestionViewController: UIViewController {
     @IBOutlet weak var switchThirdAnswer: UISwitch!
     @IBOutlet weak var switchFourthAnswer: UISwitch!
     
+    
+    
+    
     var questionToEdit: Question?
     weak var delegate : CreateOrEditQuestionDelegate?
     

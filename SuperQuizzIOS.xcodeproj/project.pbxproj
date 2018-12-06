@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7C8CC62E21B9373F008DB108 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8CC62D21B9373F008DB108 /* APIClient.swift */; };
 		7C943A8021B7CF46003A346A /* CreateOrEditQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C943A7F21B7CF46003A346A /* CreateOrEditQuestionViewController.swift */; };
 		7CA2657021B6B5C700867F62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA2656F21B6B5C700867F62 /* AppDelegate.swift */; };
 		7CA2657221B6B5C700867F62 /* AnswerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA2657121B6B5C700867F62 /* AnswerViewController.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7C8CC62D21B9373F008DB108 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		7C943A7F21B7CF46003A346A /* CreateOrEditQuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditQuestionViewController.swift; sourceTree = "<group>"; };
 		7CA2656C21B6B5C700867F62 /* SuperQuizzIOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SuperQuizzIOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7CA2656F21B6B5C700867F62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				7CA2656F21B6B5C700867F62 /* AppDelegate.swift */,
 				7CA2657621B6B5CA00867F62 /* Assets.xcassets */,
 				7CA2657B21B6B5CA00867F62 /* Info.plist */,
+				7C8CC62D21B9373F008DB108 /* APIClient.swift */,
 			);
 			path = SuperQuizzIOS;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7CA265A521B6C4D400867F62 /* Question.swift in Sources */,
+				7C8CC62E21B9373F008DB108 /* APIClient.swift in Sources */,
 				7CA2657221B6B5C700867F62 /* AnswerViewController.swift in Sources */,
 				7CA265A121B6C0F200867F62 /* QuestionTableViewCell.swift in Sources */,
 				7CA2659E21B6B76D00867F62 /* QuestionsTableViewController.swift in Sources */,
