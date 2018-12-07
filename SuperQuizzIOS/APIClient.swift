@@ -65,7 +65,13 @@ class APIClient {
                     default :
                         break
                     }
-                    let q  = Question(id: id, title: title, answers: answers, correctAnswer: correctAnswer)
+                    let userChoice : String
+                    if objectDictionary["user_choice"] as? String != nil {
+                        userChoice = (objectDictionary["user_choice"] as! String)
+                    }else{
+                        userChoice = ""
+                    }
+                    let q  = Question(id: id, title: title, answers: answers, correctAnswer: correctAnswer, userChoice: userChoice)
                     questionsToreturn.append(q)
                 }
                 onSuccess(questionsToreturn)
@@ -174,7 +180,7 @@ class APIClient {
         } else if question.correctAnswer == question.answers[3] {
             json["correct_answer"] = 4
         }
-        
+        json["user_choice"] = question.userChoice
         return json
     }
     

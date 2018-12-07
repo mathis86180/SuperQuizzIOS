@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftIcons
 
 class QuestionsTableViewController: UITableViewController {
 
@@ -64,8 +65,18 @@ class QuestionsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "QuestionTableViewCell", for: indexPath) as! QuestionTableViewCell
         
+        /*
+         par manque de  base données, la réponse de l'utilisateur est stockée sur le serveur
+         a supprimer pour stocké localement uniquement la reponse
+         */
+        if questions[indexPath.row].userChoice == questions[indexPath.row].correctAnswer {
+            cell.questionLabelTitle.setIcon(prefixText: "", icon: .fontAwesomeSolid(.thumbsUp), postfixText: " \(questions[indexPath.row].title)", size: 20)
+        }else{
+            cell.questionLabelTitle.setIcon(prefixText: "", icon: .fontAwesomeSolid(.thumbsDown), postfixText: " \(questions[indexPath.row].title)", size: 20)
+        }
         
-        cell.questionLabelTitle.text = questions[indexPath.row].title
+        //cell.questionLabelTitle.text = questions[indexPath.row].title
+        
 
         return cell
     }

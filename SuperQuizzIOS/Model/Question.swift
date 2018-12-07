@@ -14,13 +14,16 @@ public class Question {
     public var title : String
     public var answers : [String]
     public var correctAnswer : String
+    public var userChoice : String
+    
 
     
-    init(id : Int, title : String, answers : [String], correctAnswer : String){
+    init(id : Int, title : String, answers : [String], correctAnswer : String, userChoice : String){
         self.id = id
         self.title = title
         self.answers = answers
         self.correctAnswer = correctAnswer
+        self.userChoice = userChoice
     }
     
     init(title : String, answers : [String], correctAnswer : String){
@@ -28,5 +31,6 @@ public class Question {
         self.title = title
         self.answers = answers
         self.correctAnswer = correctAnswer
+        self.userChoice = ""
     }
 }

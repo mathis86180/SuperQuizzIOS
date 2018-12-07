@@ -48,6 +48,9 @@ class AnswerViewController: UIViewController {
             while count < duration {
                 DispatchQueue.global(qos: .userInitiated).async {
                     Thread.sleep(forTimeInterval: 0.1)
+                    if self.work.isCancelled {
+                        return
+                    }
                     count = count + 1
                     DispatchQueue.main.async {
                         self.progressTime.setProgress(Float(count), animated: true)
@@ -60,11 +63,18 @@ class AnswerViewController: UIViewController {
     
     func userDidChooseAnswer(isCorrectAnswer : Bool){
         if isCorrectAnswer == true {
+            question.userChoice = question.correctAnswer
+            APIClient.instance.updateQuestionFromTheServer(question: question, onSuccess: { (question) in
+                print("success")
+            }) { (Error) in
+                print(Error)
+            }
             print("Bonne réponse")
         }else {
+            question.userChoice = ""
             print("Mauvaise réponse")
         }
-        
+        work.cancel()
         self.dismiss(animated: true, completion: nil)
         onQuestionAnswered?(question, isCorrectAnswer)
     }
@@ -76,7 +86,6 @@ class AnswerViewController: UIViewController {
         }else {
             isTrue = false
         }
-        work.cancel()
         userDidChooseAnswer(isCorrectAnswer: isTrue)
     }
     

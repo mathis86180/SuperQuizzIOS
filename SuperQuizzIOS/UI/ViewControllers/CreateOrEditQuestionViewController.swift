@@ -8,6 +8,8 @@
 
 import UIKit
 
+import SwiftIcons
+
 protocol CreateOrEditQuestionDelegate : AnyObject {
     func userDidEditQuestion(q : Question) -> ()
     func userDidCreateQuestion(q : Question) -> ()
@@ -27,6 +29,7 @@ class CreateOrEditQuestionViewController: UIViewController {
     @IBOutlet weak var switchThirdAnswer: UISwitch!
     @IBOutlet weak var switchFourthAnswer: UISwitch!
     
+    @IBOutlet weak var doneButton: UIButton!
     
     
     
@@ -35,6 +38,9 @@ class CreateOrEditQuestionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        doneButton.setIcon(icon: .fontAwesomeSolid(.plus), forState: .normal)
+        
         if questionToEdit != nil {
             textFieldTitleQuestion.text = questionToEdit?.title
             textFieldFirstAnswer.text = questionToEdit?.answers[0]
